@@ -15,8 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call([
+            RoleSeeder::class,
+            AdminSeeder::class
+        ]);
+
          \App\Models\User::factory(3)->create()->each(function ($user){
-             Task::factory(3)->create(['user_id' => $user->id]);
+             $user->assignRole(__('roles.employee'));
          });
 
         // \App\Models\User::factory()->create([

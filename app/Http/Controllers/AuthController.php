@@ -18,9 +18,12 @@ use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller {
     public function register(RegisterRequest $request) {
-        $userData = $request->safe()->only('name', 'email', 'password', 'role');
+        $userData = $request->safe()->only('name', 'email', 'password');
+        $roleId = $request->input('role_id');
 
         $user = User::query()->create($userData);
+
+        $user->assignRole($roleId);
 
         $token = $user->createToken('api_token');
 

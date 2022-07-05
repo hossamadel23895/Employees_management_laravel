@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,8 @@ Route::controller(AuthController::class)->group(function () {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('me', [AuthController::class, 'me'])->name('me');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-    Route::put('tasks/{task}/changeStatus', [TaskController::class, 'changeStatus'])->name('tasks.changeStatus');
-    Route::apiResource('tasks', TaskController::class);
+});
+
+Route::group(['middleware' => ['auth:sanctum','role:'.__('roles.admin')]], function () {
+    Route::apiResource('users', UserController::class);
 });

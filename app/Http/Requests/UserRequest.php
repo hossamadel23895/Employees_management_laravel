@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class RegisterRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +27,8 @@ class RegisterRequest extends FormRequest
         return [
             'name' => ['required','string'],
             'email' => ['required', 'unique:users,email,' . optional($this->user)->id],
-            'password' => ['required', 'min:8' ,'confirmed'],
+            'password' => [Rule::requiredIf($this->isMethod('POST')), Rule::when($this->isMethod('PUT'), ['nullable']), 'min:6' ,'confirmed'],
+            'role_id' => ['exists:roles,id']
         ];
     }
 }
