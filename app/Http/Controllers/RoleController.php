@@ -10,6 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RoleController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Role::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
