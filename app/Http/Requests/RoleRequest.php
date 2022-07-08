@@ -25,7 +25,7 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required','string'],
+            'name' => ['required','string', Rule::notIn([__('roles.admin')])],
         ];
     }
 }

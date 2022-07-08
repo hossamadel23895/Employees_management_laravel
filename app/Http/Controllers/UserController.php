@@ -10,6 +10,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(User::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +21,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::query()->whereHas('roles', function ($query) {
+            return $query->where('name','!=', __('roles.admin'));
+        })->get();
+
         return UserResource::collection($users);
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -24,11 +25,12 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+        $adminRoleId = Role::query()->where('name',__('roles.admin'))->first()->id;
         return [
             'name' => ['required','string'],
             'email' => ['required', 'unique:users,email,' . optional($this->user)->id],
             'password' => [Rule::requiredIf($this->isMethod('POST')), Rule::when($this->isMethod('PUT'), ['nullable']), 'min:6' ,'confirmed'],
-            'role_id' => ['exists:roles,id']
+            'role_id' => ['required','exists:roles,id', Rule::notIn([$adminRoleId])]
         ];
     }
 }
