@@ -2,7 +2,7 @@
 
 return [
     'admin' => 'admin',
-    'sub-admin' => 'sub-admin',
-    'leader' => 'leader',
+    'leader_1' => 'leader_1',
+    'leader_2' => 'leader_2',
     'employee' => 'employee'
 ];
