@@ -16,7 +16,7 @@ class LoginResource extends JsonResource {
             'id' => $this[0]->id,
             'name' => $this[0]->name,
             'email' => $this[0]->email,
-            'role' => $this[0]->role,
+            'role' => RoleResource::make($this[0]->roles->first()),
             'token' => TokenResource::make($this[1])
         ];
     }

@@ -39,6 +39,7 @@ class UserController extends Controller
         $userData = $request->safe()->only('name', 'email', 'password');
         $roleId = $request->input('role_id');
 
+
         $user = User::query()->create($userData);
 
         $user->assignRole($roleId);
@@ -70,8 +71,12 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        $userData = $request->safe()->only('name', 'email', 'password');
+        $userData = $request->safe()->only('name', 'email');
         $roleId = $request->input('role_id');
+
+        if ($request->password) {
+            $userData['password'] = $request->password;
+        }
 
         $user->update($userData);
 

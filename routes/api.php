@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -26,6 +27,8 @@ Route::controller(AuthController::class)->group(function () {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('me', [AuthController::class, 'me'])->name('me');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::put('profile/change-password', [ ProfileController::class, 'changePassword' ])->name('profile.change-password');
+
 });
 
 Route::group(['middleware' => ['auth:sanctum','role:'.__('roles.admin')]], function () {
