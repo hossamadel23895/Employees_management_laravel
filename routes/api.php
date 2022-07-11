@@ -4,7 +4,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserVacationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,5 +35,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 Route::group(['middleware' => ['auth:sanctum','role:'.__('roles.admin')]], function () {
     Route::apiResource('users', UserController::class);
+    Route::apiResource('users.vacations', UserVacationController::class);
     Route::apiResource('roles', RoleController::class);
+    Route::apiResource('types', TypeController::class);
 });

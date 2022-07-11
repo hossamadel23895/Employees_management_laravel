@@ -53,8 +53,8 @@ class User extends Authenticatable
     }
 
     //########################################### Relations ################################################
-    public function tasks()
+    public function vacations()
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Vacation::class);
     }
 }
