@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\TypeResource;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class TypeController extends Controller
 {
@@ -27,7 +28,13 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $reqData = $request->safe()->only('name');
+
+        $type = Type::query()->create($reqData);
+
+        return TypeResource::make($type)->additional([
+            'message' =>  'Type Created successfully'
+        ])->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
     /**
@@ -38,7 +45,9 @@ class TypeController extends Controller
      */
     public function show(Type $type)
     {
-        //
+        return TypeResource::make($type)->additional([
+            'message' =>  'Type Showed successfully'
+        ])->response()->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -50,7 +59,13 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        //
+        $reqData = $request->safe()->only('name');
+
+        $type->update($reqData);
+
+        return TypeResource::make($type)->additional([
+            'message' =>  'Type Updated successfully'
+        ])->response()->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -61,6 +76,10 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        //
+        $type->delete();
+
+        return response([
+            'message'  => 'Type deleted successfully',
+        ],Response::HTTP_OK);
     }
 }

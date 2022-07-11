@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('end_date');
             $table->foreignIdFor(Type::class)->constrained();
             $table->foreignIdFor(User::class)->constrained();
+            $table->actions_by();
             $table->timestamps();
         });
     }

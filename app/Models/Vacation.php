@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasTracking;
+use App\Traits\HasTrackingRelations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Vacation extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTracking, HasTrackingRelations;
 
     protected $fillable = [
         'start_date',

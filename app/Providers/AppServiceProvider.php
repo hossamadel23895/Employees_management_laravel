@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Blueprint::macro('actions_by', function () {
+            $this->unsignedBigInteger('created_by');
+            $this->unsignedBigInteger('updated_by');
+        });
     }
 }

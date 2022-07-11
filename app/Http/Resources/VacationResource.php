@@ -20,7 +20,10 @@ class VacationResource extends JsonResource
             'type' => $this->type->name,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-//            'user' => UserResource::make($this->user)
+            'created_by' => $this->createdBy->name,
+            'updated_by' => $this->updatedBy->name,
+            'created_at' => $this->created_at->toDateString(),
+            'updated_at' => $this->updated_at->toDateString(),
         ]);
     }
 }
