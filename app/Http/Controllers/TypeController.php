@@ -7,15 +7,13 @@ use App\Models\Type;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TypeController extends Controller
-{
+class TypeController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         $types = Type::all();
         return TypeResource::collection($types);
     }
@@ -26,9 +24,8 @@ class TypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $reqData = $request->safe()->only('name');
+    public function store(Request $request) {
+        $reqData = $request->safe()->only('name', 'color');
 
         $type = Type::query()->create($reqData);
 
@@ -43,8 +40,7 @@ class TypeController extends Controller
      * @param  \App\Models\Type  $type
      * @return \Illuminate\Http\Response
      */
-    public function show(Type $type)
-    {
+    public function show(Type $type) {
         return TypeResource::make($type)->additional([
             'message' =>  'Type Showed successfully'
         ])->response()->setStatusCode(Response::HTTP_OK);
@@ -57,9 +53,8 @@ class TypeController extends Controller
      * @param  \App\Models\Type  $type
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Type $type)
-    {
-        $reqData = $request->safe()->only('name');
+    public function update(Request $request, Type $type) {
+        $reqData = $request->safe()->only('name', 'color');
 
         $type->update($reqData);
 
@@ -74,12 +69,11 @@ class TypeController extends Controller
      * @param  \App\Models\Type  $type
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Type $type)
-    {
+    public function destroy(Type $type) {
         $type->delete();
 
         return response([
             'message'  => 'Type deleted successfully',
-        ],Response::HTTP_OK);
+        ], Response::HTTP_OK);
     }
 }

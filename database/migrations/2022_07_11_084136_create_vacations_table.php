@@ -19,6 +19,7 @@ return new class extends Migration
             $table->id();
             $table->date('start_date');
             $table->date('end_date');
+            $table->text('reason');	
             $table->foreignIdFor(Type::class)->constrained();
             $table->foreignIdFor(User::class)->constrained();
             $table->actions_by();

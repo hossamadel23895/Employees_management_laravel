@@ -8,16 +8,14 @@ use App\Models\Vacation;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserVacationController extends Controller
-{
+class UserVacationController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
-    {
+    public function index(User $user) {
         $vacations = $user->vacations()->get();
         return VacationResource::collection($vacations);
     }
@@ -29,9 +27,8 @@ class UserVacationController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, User $user)
-    {
-        $reqData = $request->only('start_date','end_date','type_id');
+    public function store(Request $request, User $user) {
+        $reqData = $request->only('start_date', 'end_date', 'reason', 'type_id');
         $vacation = $user->vacations()->create($reqData);
 
         return VacationResource::make($vacation)->additional([
@@ -46,8 +43,7 @@ class UserVacationController extends Controller
      * @param  \App\Models\Vacation  $vacation
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user, Vacation $vacation)
-    {
+    public function show(User $user, Vacation $vacation) {
         return VacationResource::make($vacation)->additional([
             'message' =>  'Vacation Showed successfully'
         ])->response()->setStatusCode(Response::HTTP_OK);
@@ -61,9 +57,8 @@ class UserVacationController extends Controller
      * @param  \App\Models\Vacation  $vacation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user, Vacation $vacation)
-    {
-        $reqData = $request->only('start_date','end_date','type_id');
+    public function update(Request $request, User $user, Vacation $vacation) {
+        $reqData = $request->only('start_date', 'end_date', 'reason', 'type_id');
 
         $vacation->update($reqData);
 
@@ -79,14 +74,13 @@ class UserVacationController extends Controller
      * @param  \App\Models\Vacation  $vacation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user, Vacation $vacation)
-    {
+    public function destroy(User $user, Vacation $vacation) {
         $vacation->user()->dissociate();
         $vacation->type()->dissociate();
         $vacation->delete();
 
         return response([
             'message'  => 'Vacation deleted successfully',
-        ],Response::HTTP_OK);
+        ], Response::HTTP_OK);
     }
 }

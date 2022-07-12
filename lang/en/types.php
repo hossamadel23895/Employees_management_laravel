@@ -1,6 +1,8 @@
 <?php
 
 return [
-    'full_day' => 'Full Day',
-    'half_day' => 'Half Day',
+    'paid' => 'Paid',
+    'family' => 'Family',
+    'emergency' => 'Emergency',
+    'non_paid' => 'Non Paid',
 ];
